@@ -1,0 +1,2 @@
+F:\Final Unity Project\2_Terminal_Hacker\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
+F:\Final Unity Project\2_Terminal_Hacker\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
