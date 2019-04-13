@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Hacker : MonoBehaviour
 {
     //Game configuration data
     string[] level1Passwords = { "books", "aisle", "self", "password", "font", "borrow" };
     string[] level2Passwords = {"prisoner","handcuffs","holster", "uniform","arrest" };
-
+    int index1=0;
+    int index2 = 0;
     //Game state
     int level;
     enum Screen { MainMenu, Password, Win };
@@ -18,6 +16,12 @@ public class Hacker : MonoBehaviour
     void Start()
     {
         ShowMainMenu();
+    }
+
+    void Update()
+    {
+        index1 = Random.Range(0, level1Passwords.Length);
+        index2 = Random.Range(0, level2Passwords.Length);
     }
 
     void ShowMainMenu()
@@ -80,10 +84,10 @@ public class Hacker : MonoBehaviour
         switch (level)
         {
             case "1":
-                password = level1Passwords[0];
+                password = level1Passwords[index1];
                 break;
             case "2":
-                password = level2Passwords[4];
+                password = level2Passwords[index2];
                 break;
             default:
                 Debug.LogError("Invalid level number");
