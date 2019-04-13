@@ -3,25 +3,21 @@
 public class Hacker : MonoBehaviour
 {
     //Game configuration data
+    const string menuHint = "You may type 'menu' at anytime";
     string[] level1Passwords = { "books", "aisle", "shelf", "password", "font", "borrow" };
     string[] level2Passwords = {"prisoner","handcuffs","holster", "uniform","arrest" };
-    int index1=0;
-    int index2 = 0;
+    string[] level3Passwords = { "starfield", "telescope", "enviroment", "exploration", "astronauts", };
+
     //Game state
     int level;
     enum Screen { MainMenu, Password, Win };
     Screen currentScreen;
     string password;
+
     // Start is called before the first frame update
     void Start()
     {
         ShowMainMenu();
-    }
-
-    void Update()
-    {
-        index1 = Random.Range(0, level1Passwords.Length);
-        index2 = Random.Range(0, level2Passwords.Length);
     }
 
     void ShowMainMenu()
@@ -59,10 +55,13 @@ public class Hacker : MonoBehaviour
         switch (level)
         {
             case 1:
-                password = level1Passwords[index1];
+                password = level1Passwords[Random.Range(0,level1Passwords.Length)];
                 break;
             case 2:
-                password = level2Passwords[index2];
+                password = level2Passwords[Random.Range(0,level2Passwords.Length)];
+                break;
+            case 3:
+                password = level3Passwords[Random.Range(0, level3Passwords.Length)];
                 break;
             default:
                 Debug.LogError("Invalid level number");
@@ -77,7 +76,7 @@ public class Hacker : MonoBehaviour
 
     void RunMainMenu(string input)
     {
-        bool isValidLevelNumber = (input == "1" || input == "2");
+        bool isValidLevelNumber = (input == "1" || input == "2" || input == "3");
         if (isValidLevelNumber)
         {
             level = int.Parse(input);
@@ -97,7 +96,8 @@ public class Hacker : MonoBehaviour
         currentScreen = Screen.Password;
         Terminal.WriteLine("You have chosen level " + level);
         RandomPassword(int.Parse(level));
-        Terminal.WriteLine("Please enter your password, hint :"+password.Anagram());
+        Terminal.WriteLine("Enter your password, hint :"+password.Anagram());
+        Terminal.WriteLine(menuHint);
         
     }
 
@@ -107,6 +107,7 @@ public class Hacker : MonoBehaviour
         currentScreen = Screen.Win;
         Terminal.WriteLine("Congratulation! you passed level " + level);
         Terminal.WriteLine("Enter 'menu' to go back to main menu");
+        Terminal.WriteLine("Play again for greater challenge.");
         if (level == 1)
         {
             Terminal.WriteLine("Have a book . . .");
@@ -128,6 +129,19 @@ public class Hacker : MonoBehaviour
 |__________/
 ");
         }
+        else if (level == 3)
+        {
+            Terminal.WriteLine(@"
+ _ __   __ _ ___  __ _
+| '_ \ / _` / __|/ _` |
+| | | | (_| \__ \ (_| |
+|_| |_|\__,_|___)\__,_|
+");
+            Terminal.WriteLine("Welcome to NASA internal system.");
+        }
+        else
+            Debug.LogError("Invalid level");
+        
     }
 
     void Password(string input, int level)
