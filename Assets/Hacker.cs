@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class Hacker : MonoBehaviour
 {
+    //Game configuration data
+    string[] level1Passwords = { "books", "aisle", "self", "password", "font", "borrow" };
+    string[] level2Passwords = {"prisoner","handcuffs","holster", "uniform","arrest" };
+
     //Game state
     int level;
     enum Screen { MainMenu, Password, Win };
@@ -53,22 +57,10 @@ public class Hacker : MonoBehaviour
 
     void RunMainMenu(string input)
     {
-        if (input == "1")
+        bool isValidLevelNumber = (input == "1" || input == "2");
+        if (isValidLevelNumber)
         {
-            level = 1;
-            password = "shelf";
-            StartGame(input);
-        }
-        else if (input == "2")
-        {
-            level = 2;
-            password = "handcuff";
-            StartGame(input);
-        }
-        else if (input == "3")
-        {
-            level = 3;
-            password = "space engine";
+            level = int.Parse(input);
             StartGame(input);
         }
         else if (input == "007")
@@ -85,6 +77,18 @@ public class Hacker : MonoBehaviour
         currentScreen = Screen.Password;
         Terminal.WriteLine("You have chosen level " + level);
         Terminal.WriteLine("Please enter your password :");
+        switch (level)
+        {
+            case "1":
+                password = level1Passwords[0];
+                break;
+            case "2":
+                password = level2Passwords[4];
+                break;
+            default:
+                Debug.LogError("Invalid level number");
+                break;
+        }
     }
 
     void WinGame(int level)
